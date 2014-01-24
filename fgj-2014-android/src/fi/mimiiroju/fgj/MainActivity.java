@@ -3,6 +3,7 @@ package fi.mimiiroju.fgj;
 import java.io.IOException;
 import java.util.Set;
 
+import Game.PallesSmartPants;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class MainActivity extends AndroidApplication {
 				e.printStackTrace();
 			}
 		}
+
     }
 
 	private void initMyontecPants(BluetoothDevice device) {
