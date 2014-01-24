@@ -19,6 +19,7 @@ public class Palle {
 	public Vector2 mAcceleration = new Vector2();	//Ukon liikkuvuus hypyn aikana
 	public Vector2 mVelocity = new Vector2();		//Lasketaan ukon nopeus
 	
+	
 	public Palle(Vector2 mPosition) {
 		this.mPosition = mPosition;	
 		mRect.height = SIZE;
@@ -34,5 +35,10 @@ public class Palle {
 		// TODO Auto-generated method stub
 		return mPosition;
 	}
+	
+	public void update(float delta) {
+		mPosition.add(mVelocity.)
+	}
+	
 
 }

@@ -3,6 +3,7 @@ package fi.mimiiroju.fgj;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.obviam.starassault.controller.BobController.Keys;
 
 import actors.Palle;
 import actors.World;
