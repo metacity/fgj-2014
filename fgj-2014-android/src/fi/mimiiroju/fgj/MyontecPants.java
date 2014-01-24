@@ -6,11 +6,11 @@ import android.os.Handler;
 public class MyontecPants {
 	
 	private final BluetoothDevice mDevice;
-	private final Handler mDataProcessor;
+	private final Handler mOutputHandler;
 
-	public MyontecPants(BluetoothDevice device, Handler dataProcessor) {
+	public MyontecPants(BluetoothDevice device, Handler outputHandler) {
 		mDevice = device;
-		mDataProcessor = dataProcessor;
+		mOutputHandler = outputHandler;
 		
 		connect();
 	}
