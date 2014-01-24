@@ -81,7 +81,7 @@ public class MyontecPants {
             public Void call() throws Exception {
 				mOutStream.write(command.getBytes("US-ASCII"));
 				mOutStream.flush();
-				Gdx.app.log(TAG, "Command successfully sent: " + command);
+				Gdx.app.log(TAG, "Command sent successfully: " + command);
 				return null;
             }
 		});
@@ -102,7 +102,6 @@ public class MyontecPants {
 		@Override
 		public void run() {
 			try {
-				//Gdx.app.log(TAG, String.valueOf(mInStream.readByte()));
 				// Read and ignore header (303 bytes)
 				mInStream.readFully(new byte[303]);
 				
