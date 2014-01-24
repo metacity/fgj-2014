@@ -22,4 +22,8 @@ public class World {
 		time = System.nanoTime();
 	}
 	
+	public Palle getPalle() {
+		return palle;
+	}
+	
 }

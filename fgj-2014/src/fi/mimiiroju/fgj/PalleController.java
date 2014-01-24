@@ -3,14 +3,16 @@ package fi.mimiiroju.fgj;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.obviam.starassault.controller.BobController.Keys;
+
+import actors.Palle;
+import actors.World;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
 import fi.mimiiroju.fgj.FGJ2014.State;
 
-public class palleController implements GestureListener {
+public class PalleController implements GestureListener {
 
 		enum Keys {
 			JUMP, RUN
@@ -30,16 +32,16 @@ public class palleController implements GestureListener {
 		private long jumpPressedTime;
 		private boolean jumpingPressed;
 		
-		static Map<Keys, Boolean> keys = new HashMap<palleController.Keys, Boolean>();
+		static Map<Keys, Boolean> keys = new HashMap<PalleController.Keys, Boolean>();
 		
 		static {
 			keys.put(Keys.JUMP, false);
 			keys.put(Keys.RUN, false);
 		};
 		
-		public palleController(World world) {
+		public PalleController(World world) {
 			this.world = world;
-			this.palle = world.getpalle();
+			this.palle = world.getPalle();
 		}
 
 		@Override
@@ -94,14 +96,14 @@ public class palleController implements GestureListener {
 		public void update(float delta) {
 			processInput();
 			
-			palle.getAcceleration().y = GRAVITY;
-			palle.getAcceleration().mul(delta);
-			palle.getVelocity().add(palle.getAcceleration().x, palle.getAcceleration().y);
-			if(palle.getAcceleration().x == 0) {
-				palle.getVelocity().x *= DAMP;
+			palle.mAcceleration.y = GRAVITY;
+			palle.mAcceleration.mul(delta);
+			palle.mVelocity.add(palle.mAcceleration.x, palle.mAcceleration.y);
+			if(palle.mAcceleration.x == 0) {
+				palle.mVelocity.x *= DAMP;
 			}
-			if(palle.getVelocity().x > MAX_VEL) {
-				palle.getVelocity().x = MAX_VEL;
+			if(palle.mVelocity.x > MAX_VEL) {
+				palle.mVelocity.x = MAX_VEL;
 			}
 			
 			palle.update(delta);
@@ -127,13 +129,13 @@ public class palleController implements GestureListener {
 					jumpingPressed = true;
 					jumpPressedTime = System.currentTimeMillis();
 					palle.setState(State.JUMP);
-					palle.getVelocity().y = MAX_JUMP_SPEED; 
+					palle.mVelocity.y = MAX_JUMP_SPEED; 
 				} else {
 					if (jumpingPressed && ((System.currentTimeMillis() - jumpPressedTime) >= LONG_JUMP_PRESS)) {
 						jumpingPressed = false;
 					} else {
 						if (jumpingPressed) {
-							palle.getVelocity().y = MAX_JUMP_SPEED;
+							palle.mVelocity.y = MAX_JUMP_SPEED;
 						}
 					}
 				}
@@ -142,12 +144,12 @@ public class palleController implements GestureListener {
 				if (!palle.getState().equals(State.JUMP)) {
 					palle.setState(State.RUN);
 				}
-				palle.getAcceleration().x = ACCELERATION;
+				palle.mAcceleration.x = ACCELERATION;
 			} else {
 				if(!palle.getState().equals(State.JUMP)) {
 					palle.setState(State.IDLE);
 				}
-				palle.getAcceleration().x = 0;
+				palle.mAcceleration.x = 0;
 			}
 			return false;
 		}
