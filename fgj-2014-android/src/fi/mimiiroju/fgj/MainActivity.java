@@ -26,7 +26,7 @@ public class MainActivity extends AndroidApplication {
         
         initialize(new FGJ2014(), cfg);
         
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+       /* BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter != null && btAdapter.isEnabled()) {
         	Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
         	for (BluetoothDevice device : pairedDevices) {
@@ -43,6 +43,6 @@ public class MainActivity extends AndroidApplication {
     private void initMyontecPants(BluetoothDevice device) {
     	mDataProcessorThread = new HandlerThread("DataProcessorThread");
     	mDataProcessorThread.start();
-    	//mDataHandler
+    	//mDataHandler*/
     }
 }
