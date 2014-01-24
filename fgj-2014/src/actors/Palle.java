@@ -9,9 +9,9 @@ public class Palle {
 		RUN, JUMP, IDLE;					//Ukkelin eri tilat
 	}
 	
-	public static final float SIZE = 1.0f;			//Ukkelin koko 1.0f vaikka
-	public static final float SPEED = -0.1f; 		//Vakionoppeus 0.1f tuaksepp‰in
-	public static final float JUMP_SPEED = 0.5f;	//Ukon hyppynopeus 0.5f
+	public  final static float SIZE = 1.0f;			//Ukkelin koko 1.0f vaikka
+	public  float SPEED = -0.1f; 		//Vakionoppeus 0.1f tuaksepp‰in
+	public  float JUMP_SPEED = 0.5f;	//Ukon hyppynopeus 0.5f
 	public Rectangle mRect = new Rectangle();		//Tehd‰‰n rektankeli
 	public State mState = State.IDLE;				//Ukon vakiotila on IDLE
 	
@@ -28,8 +28,10 @@ public class Palle {
 	public Rectangle getBounds() {
 		return mRect;
 	}
-	
+
+
 	public Vector2 getPosition() {
+		// TODO Auto-generated method stub
 		return mPosition;
 	}
 
