@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 @SuppressWarnings("serial")
 public class Palle extends Rectangle {
-	static final float WIDTH = 50;
-	static final float HEIGHT = 100;
+	static final float WIDTH = 150;
+	static final float HEIGHT = 300;
 	static final int MOVEMENT_PER_SECOND = 400;
 
 

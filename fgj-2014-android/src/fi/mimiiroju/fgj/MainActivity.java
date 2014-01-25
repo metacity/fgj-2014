@@ -3,9 +3,6 @@ package fi.mimiiroju.fgj;
 import java.io.IOException;
 import java.util.Set;
 
-import view.WorldRenderer;
-
-import Game.PallesSmartPants;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -29,7 +26,7 @@ public class MainActivity extends AndroidApplication {
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = false;
 
-		initialize(new PallesSmartPants(), cfg);
+		initialize(new FGJ2014(), cfg);
 
 		mDataHandler = new Handler(getMainLooper()) {
 			@Override

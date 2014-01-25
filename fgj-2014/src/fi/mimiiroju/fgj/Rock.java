@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 @SuppressWarnings("serial")
 public class Rock extends Rectangle {
 	
-	static final float WIDTH = 60;
-	static final float HEIGHT = 40;
+	static final float WIDTH = 100;
+	static final float HEIGHT = 65;
 	static final int MOVEMENT_PER_SECOND = 500;
 
 	public Rock() {

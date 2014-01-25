@@ -3,9 +3,7 @@ package fi.mimiiroju.fgj;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Assets {
 
@@ -16,8 +14,7 @@ public class Assets {
 	static Texture rock;
 	static Texture palleTexture;
 	static TextureRegion[] palleFrames;
-
-	static BitmapFont font;
+	static TextureRegion currentFrame;
 
 	public static void load() {
 		Texture palle = new Texture(Gdx.files.internal("data/palle.gif"));
@@ -35,18 +32,14 @@ public class Assets {
 			}
 		}
 		
-		rock = new Texture(Gdx.files.internal("data/rock.png"));
+		rock = new Texture(Gdx.files.internal("data/stone.png"));
 		background = new Texture(Gdx.files.internal("data/background.png"));
 
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Roboto-Regular.ttf"));
-		font = generator.generateFont(20);
-		generator.dispose();
 	}
 
 	public static void dispose() {
 		background.dispose();
 		rock.dispose();
 		palleTexture.dispose();
-		font.dispose();
-	}
+		}
 }
