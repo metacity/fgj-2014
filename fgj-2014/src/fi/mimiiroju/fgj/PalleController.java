@@ -3,15 +3,14 @@ package fi.mimiiroju.fgj;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.obviam.starassault.controller.BobController.Keys;
 
 import actors.Palle;
+import actors.Palle.State;
 import actors.World;
 
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
-import fi.mimiiroju.fgj.FGJ2014.State;
 
 public class PalleController implements GestureListener {
 
@@ -34,6 +33,8 @@ public class PalleController implements GestureListener {
 		private boolean jumpingPressed;
 		
 		static Map<Keys, Boolean> keys = new HashMap<PalleController.Keys, Boolean>();
+		
+		
 		
 		static {
 			keys.put(Keys.JUMP, false);
@@ -110,26 +111,26 @@ public class PalleController implements GestureListener {
 			palle.update(delta);
 			if(palle.getPosition().y < 0) {
 				palle.getPosition().y = 0f;
-				palle.setPosition(palle.getPosition());
-				if(palle.getState().equals(State.JUMP)) {
-					palle.setState(State.IDLE);
+				palle.mPosition(palle.getPosition());
+				if(palle.mState.equals(State.JUMP)) {
+					palle.mState(State.IDLE);
 				}
 			}
 			if(palle.getPosition().x > WIDTH - palle.getBounds().width) {
 				palle.getPosition().x = WIDTH - palle.getBounds().width;
-				palle.setPosition(palle.getPosition());
-				if(!palle.getState().equals(State.JUMP)) {
-					palle.setState(State.IDLE);
+				palle.mPosition(palle.getPosition());
+				if(!palle.mState.equals(State.JUMP)) {
+					palle.mState(State.IDLE);
 				}
 			}
 		}
 
 		private boolean processInput() {
 			if (keys.get(Keys.JUMP)) {
-				if (!palle.getState().equals(State.JUMP)) {
+				if (!palle.mState.equals(State.JUMP)) {
 					jumpingPressed = true;
 					jumpPressedTime = System.currentTimeMillis();
-					palle.setState(State.JUMP);
+					palle.mState(State.JUMP);
 					palle.mVelocity.y = MAX_JUMP_SPEED; 
 				} else {
 					if (jumpingPressed && ((System.currentTimeMillis() - jumpPressedTime) >= LONG_JUMP_PRESS)) {
@@ -142,13 +143,13 @@ public class PalleController implements GestureListener {
 				}
 			}
 			if(keys.get(Keys.RUN)) {
-				if (!palle.getState().equals(State.JUMP)) {
-					palle.setState(State.RUN);
+				if (!palle.mState.equals(State.JUMP)) {
+					palle.mState(State.RUN);
 				}
 				palle.mAcceleration.x = ACCELERATION;
 			} else {
-				if(!palle.getState().equals(State.JUMP)) {
-					palle.setState(State.IDLE);
+				if(!palle.mState.equals(State.JUMP)) {
+					palle.mState(State.IDLE);
 				}
 				palle.mAcceleration.x = 0;
 			}

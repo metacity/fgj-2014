@@ -1,7 +1,11 @@
 package actors;
 
+import org.omg.CORBA.Bounds;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+
 
 public class Palle {
 	
@@ -36,8 +40,19 @@ public class Palle {
 		return mPosition;
 	}
 	
+	
 	public void update(float delta) {
-		mPosition.add(mVelocity.)
+		mRect.x = mPosition.x;
+		mRect.y = mPosition.y;
+	}
+
+	public void mState(State idle) {
+		mState = State.IDLE;
+	}
+
+	public void mPosition(Vector2 position) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
