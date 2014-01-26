@@ -66,11 +66,13 @@ public class WorldRenderer {
 	}
 	
 	private void renderPalle() {
+		float textureOffset = Gdx.graphics.getHeight() / 50;
+		
 		Palle palle = world.palle;
 		if (palle.state == Palle.State.JUMPING) {
-			batch.draw(Assets.palleFrames[2], palle.x - Palle.HITBOX_RADIUS - 10, palle.y - Palle.HITBOX_RADIUS - 10);
+			batch.draw(Assets.palleFrames[2], palle.x - Palle.HITBOX_RADIUS - textureOffset, palle.y - Palle.HITBOX_RADIUS - textureOffset);
 		} else {
-			batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x - Palle.HITBOX_RADIUS - 10, palle.y - Palle.HITBOX_RADIUS - 10);
+			batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x - Palle.HITBOX_RADIUS - textureOffset, palle.y - Palle.HITBOX_RADIUS - textureOffset);
 		}
 	}
 	

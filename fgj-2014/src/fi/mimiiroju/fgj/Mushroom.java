@@ -1,5 +1,6 @@
 package fi.mimiiroju.fgj;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
@@ -14,12 +15,12 @@ public class Mushroom extends Rectangle implements Poolable {
 	State state;
 
 	public Mushroom() {
-		super(World.WORLD_WIDTH + 2, 55, WIDTH, HEIGHT);
+		super(World.WORLD_WIDTH + 2, Gdx.graphics.getHeight() / 15, WIDTH, HEIGHT);
 		state = State.NORMAL;
 	}
 
 	public void update(float delta) {
-		x -= (MOVEMEMT_PER_SECOND * delta);
+		x -= (Gdx.graphics.getWidth() / 3.35f * delta);
 		if (state == State.EXPLODING) {
 			stateTime += delta;
 		}

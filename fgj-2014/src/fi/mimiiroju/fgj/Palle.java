@@ -7,13 +7,14 @@ import com.badlogic.gdx.math.Vector2;
 @SuppressWarnings("serial")
 public class Palle extends Circle {
 	static final float HITBOX_RADIUS = 100;
+	static final float minY = Gdx.graphics.getWidth() / 20;
 	
 	final Vector2 velocity;
 	float stateTime = 0.0f;
 	State state = State.RUNNING;
 
 	public Palle() {
-		super(World.WORLD_WIDTH/4, 60 + HITBOX_RADIUS, HITBOX_RADIUS);
+		super(World.WORLD_WIDTH/4, minY + HITBOX_RADIUS, HITBOX_RADIUS);
 		velocity = new Vector2();
 	}
 
@@ -36,8 +37,8 @@ public class Palle extends Circle {
 	}
 	
 	private void preventOffscreen() {
-		if (y < 50 + HITBOX_RADIUS) {
-			y = 50 + HITBOX_RADIUS;
+		if (y <  minY + HITBOX_RADIUS) {
+			y = minY + HITBOX_RADIUS;
 			velocity.y = 0;
 			state = State.RUNNING;
 		}
