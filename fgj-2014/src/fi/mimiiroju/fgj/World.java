@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class World {
+	
+	FGJ2014 game;
 	static final int WORLD_WIDTH = 1280;
 	static final int WORLD_HEIGHT = 720;
 	static final float GRAVITY = 500;
@@ -17,6 +19,7 @@ public class World {
 	final Palle palle;
 	final Array<Mushroom> activeMushrooms;
 	final Pool<Mushroom> mushroomPool;
+	boolean collided;
 
 	int score = 0;
 	long lastRockSpawnTime;
@@ -26,6 +29,8 @@ public class World {
 		palle = new Palle();
 		activeMushrooms = new Array<Mushroom>(false, 8);
 		mushroomPool = Pools.get(Mushroom.class);
+		collided = false;
+		
 	}
 
 	public void update(float delta) {
@@ -41,6 +46,7 @@ public class World {
 				//Gdx.app.log("Törmäys!", "Törmäsit kiveen");
 				Gdx.input.vibrate(10);
 				mushroom.state = Mushroom.State.EXPLODING;
+				collided = true;
 			}
 			
 			if (mushroom.x + Mushroom.WIDTH < 0) {
