@@ -10,12 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class WorldRenderer {
 	
 	static final float RUNNING_FRAME_DURATION = 0.07f;
+	static final float EXPLOSION_FRAME_DURATION = 0.06f;
 	
 	final SpriteBatch batch;
 	final World world;
 	final OrthographicCamera camera;
 	
 	final Animation palleAnimation;
+	final Animation explosionAnimation;
 	
 	Sprite backgroundSprite;
 	float scrollTimer = 0.0f;
@@ -28,6 +30,7 @@ public class WorldRenderer {
 		camera.setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT);
 		
 		palleAnimation = new Animation(RUNNING_FRAME_DURATION, Assets.palleFrames);
+		explosionAnimation = new Animation(EXPLOSION_FRAME_DURATION, Assets.explosionFrames);
 		
 		
 		Assets.background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
@@ -59,20 +62,27 @@ public class WorldRenderer {
 	private void renderObjects() {
 		batch.enableBlending();
 		renderPalle();
-		renderRocks();
+		renderMushrooms();
 	}
 	
 	private void renderPalle() {
 		Palle palle = world.palle;
-		batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x, palle.y);
+		if (palle.state == Palle.State.JUMPING) {
+			batch.draw(Assets.palleFrames[2], palle.x - Palle.HITBOX_RADIUS - 10, palle.y - Palle.HITBOX_RADIUS - 10);
+		} else {
+			batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x - Palle.HITBOX_RADIUS - 10, palle.y - Palle.HITBOX_RADIUS - 10);
+		}
 	}
 	
-	public void renderRocks() {
-		int len = world.activeRocks.size;
+	public void renderMushrooms() {
+		int len = world.activeMushrooms.size;
 		for (int i = 0; i < len; ++i) {
-			Rock rock = world.activeRocks.get(i);
-			// Tähän render...
-			batch.draw(Assets.rock, 700, 5, Rock.WIDTH, Rock.HEIGHT);
+			Mushroom mushroom = world.activeMushrooms.get(i);
+			if (mushroom.state == Mushroom.State.EXPLODING) {
+				batch.draw(explosionAnimation.getKeyFrame(mushroom.stateTime), mushroom.x, mushroom.y);
+			} else {
+				batch.draw(Assets.mushroom, mushroom.x, mushroom.y);
+			}
 		}
 	}
 }

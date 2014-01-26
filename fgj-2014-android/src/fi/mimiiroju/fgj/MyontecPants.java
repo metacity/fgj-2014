@@ -108,7 +108,7 @@ public class MyontecPants {
 				byte[] samples = new byte[8]; // Each datagroup is 8 bytes
 				while (true) {
 					mInStream.readFully(samples);
-					//Gdx.app.log(TAG, Arrays.toString(samples));
+					Gdx.app.log(TAG, Arrays.toString(samples));
 					
 					// Ignore a "marker" packet
 					if (!isMarkerPacket(samples)) {

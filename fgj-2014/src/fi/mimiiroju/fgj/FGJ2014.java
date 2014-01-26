@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class FGJ2014 extends Game {
 	
 	SpriteBatch batch;
+	GameScreen gameScreen;
 	
 	@Override
 	public void create() {
@@ -16,7 +17,8 @@ public class FGJ2014 extends Game {
 		
 		Assets.load();
 		batch = new SpriteBatch();
-		setScreen(new GameScreen(this));
+		gameScreen = new GameScreen(this);
+		setScreen(gameScreen);
 	}
 
 	@Override

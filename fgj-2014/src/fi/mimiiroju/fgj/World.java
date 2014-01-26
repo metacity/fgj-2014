@@ -12,43 +12,49 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class World {
 	static final int WORLD_WIDTH = 1280;
 	static final int WORLD_HEIGHT = 720;
-	static final float GRAVITY = 3;
-	static final long ROCK_SPAWN_INTERVAL_NS = 5000000000L; 
-	
+	static final float GRAVITY = 500;
+
 	final Palle palle;
-	final Array<Rock> activeRocks;
-	final Pool<Rock> rockPool;
-	WorldRenderer wRenderer;
-	
+	final Array<Mushroom> activeMushrooms;
+	final Pool<Mushroom> mushroomPool;
+
 	int score = 0;
 	long lastRockSpawnTime;
-	
+	long nextMushroomAfterNs = 2000000000L;
+
 	public World() {
-		palle = new Palle(World.WORLD_WIDTH / 2, 60);
-		activeRocks = new Array<Rock>(false, 8);
-		rockPool = Pools.get(Rock.class);
+		palle = new Palle();
+		activeMushrooms = new Array<Mushroom>(false, 8);
+		mushroomPool = Pools.get(Mushroom.class);
 	}
-	
+
 	public void update(float delta) {
 		palle.update(delta);
-		
+
 		// Process rocks
-		Iterator<Rock> iter = activeRocks.iterator();
+		Iterator<Mushroom> iter = activeMushrooms.iterator();
 		while (iter.hasNext()) {
-			Rock rock = iter.next();
-			rock.update(delta);
-			// Tähän törmäystestaus..
-			if(Intersector.overlaps(rock, palle) == true) {
-				Gdx.app.log("Törmäys!", "Törmäsit kiveen");
-				// Pallen liikkuvuus nollaan
+			Mushroom mushroom = iter.next();
+			mushroom.update(delta);
+			
+			if (Intersector.overlaps(palle, mushroom)) {
+				//Gdx.app.log("Törmäys!", "Törmäsit kiveen");
+				Gdx.input.vibrate(10);
+				mushroom.state = Mushroom.State.EXPLODING;
+			}
+			
+			if (mushroom.x + Mushroom.WIDTH < 0) {
+				iter.remove();
+				mushroomPool.free(mushroom);
 			}
 		}
-		
-		if (TimeUtils.nanoTime() - lastRockSpawnTime > ROCK_SPAWN_INTERVAL_NS) {
+
+		if (TimeUtils.nanoTime() - lastRockSpawnTime > nextMushroomAfterNs) {
 			// Spawn new obstacle..
 			Gdx.app.log("Spawnataan kivi", "*SPAWNED*");
 			lastRockSpawnTime = TimeUtils.nanoTime();
-			activeRocks.add(new Rock());
-			}
+			activeMushrooms.add(mushroomPool.obtain());
+			nextMushroomAfterNs = (long) (Math.random() * 4000000000L + 2000000000L);
+		}
 	}
 }

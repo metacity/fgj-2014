@@ -18,6 +18,8 @@ public class MainActivity extends AndroidApplication {
 
 	private Handler mDataHandler;
 	private MyontecPants mMyontecPants;
+	
+	private FGJ2014 theGame;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,8 @@ public class MainActivity extends AndroidApplication {
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
 		cfg.useGL20 = true;
 
-		initialize(new FGJ2014(), cfg);
+		theGame = new FGJ2014();
+		initialize(theGame, cfg);
 
 		mDataHandler = new Handler(getMainLooper()) {
 			@Override
@@ -39,7 +42,7 @@ public class MainActivity extends AndroidApplication {
 		if (btAdapter != null && btAdapter.isEnabled()) {
 			Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 			for (BluetoothDevice device : pairedDevices) {
-				if ("MbM-1007".equalsIgnoreCase(device.getName())) {
+				if (device.getName().startsWith("MbM-100")) {
 					initMyontecPants(device);
 					break;
 				}
