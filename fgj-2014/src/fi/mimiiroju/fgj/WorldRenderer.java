@@ -1,11 +1,14 @@
 package fi.mimiiroju.fgj;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer {
 	
@@ -22,6 +25,10 @@ public class WorldRenderer {
 	
 	Sprite backgroundSprite;
 	float scrollTimer = 0.0f;
+	
+	
+	// For hitbox bound rendering..
+	ShapeRenderer shapeRenderer;
 
 	public WorldRenderer(SpriteBatch batch, World world) {
 		this.batch = batch;
@@ -38,6 +45,9 @@ public class WorldRenderer {
 		
 		Assets.background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		backgroundSprite = new Sprite(Assets.background, 0, 0, World.WORLD_WIDTH, World.WORLD_HEIGHT);
+		
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setColor(Color.YELLOW);
 	}
 	
 	public void render() {
@@ -48,6 +58,8 @@ public class WorldRenderer {
 		renderObjects();
 		renderScore();
 		batch.end();
+		
+		renderHitBoxes();
 	}
 	
 	private void renderBackground() {
@@ -69,13 +81,14 @@ public class WorldRenderer {
 	}
 	
 	private void renderPalle() {
-		float textureOffset = Gdx.graphics.getHeight() / 50;
+		float textureOffsetX = 5;
+		float textureOffsetY = 5;
 		
 		Palle palle = world.palle;
 		if (palle.state == Palle.State.JUMPING) {
-			batch.draw(Assets.palleFrames[2], palle.x - Palle.HITBOX_RADIUS - textureOffset, palle.y - Palle.HITBOX_RADIUS - textureOffset);
+			batch.draw(Assets.palleFrames[2], palle.x - Palle.HITBOX_RADIUS - textureOffsetX, palle.y - Palle.HITBOX_RADIUS - textureOffsetY);
 		} else {
-			batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x - Palle.HITBOX_RADIUS - textureOffset, palle.y - Palle.HITBOX_RADIUS - textureOffset);
+			batch.draw(palleAnimation.getKeyFrame(palle.stateTime, true), palle.x - Palle.HITBOX_RADIUS - textureOffsetX, palle.y - Palle.HITBOX_RADIUS - textureOffsetY);
 		}
 	}
 	
@@ -94,5 +107,14 @@ public class WorldRenderer {
 	private void renderScore() {
 		Assets.font.draw(batch, String.format("Time: %.2f sec", (System.nanoTime() - startTime) / 1e9), 15, 40);
 		Assets.font.draw(batch, "Health: " + world.palle.health + "%", 15, world.WORLD_HEIGHT - 15);
+	}
+	
+	private void renderHitBoxes() {
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.circle(world.palle.x, world.palle.y, world.palle.radius);
+		for (Mushroom shroom : world.activeMushrooms) {
+			shapeRenderer.rect(shroom.x, shroom.y, shroom.width, shroom.height);
+		}
+		shapeRenderer.end();
 	}
 }

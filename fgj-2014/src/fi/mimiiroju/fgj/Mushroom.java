@@ -1,13 +1,12 @@
 package fi.mimiiroju.fgj;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 @SuppressWarnings("serial")
 public class Mushroom extends Rectangle implements Poolable {
 
-	static final float MOVEMEMT_PER_SECOND = 380;
+	static final float MOVEMENT_PER_SECOND = 380;
 	static final float WIDTH = 70;
 	static final float HEIGHT = 100;
 	
@@ -15,12 +14,12 @@ public class Mushroom extends Rectangle implements Poolable {
 	State state;
 
 	public Mushroom() {
-		super(World.WORLD_WIDTH + 2, Gdx.graphics.getHeight() / 15, WIDTH, HEIGHT);
+		super(World.WORLD_WIDTH + 2, 60, WIDTH, HEIGHT);
 		state = State.NORMAL;
 	}
 
 	public void update(float delta) {
-		x -= (Gdx.graphics.getWidth() / 3.35f * delta);
+		x -= (MOVEMENT_PER_SECOND * delta);
 		if (state == State.EXPLODING) {
 			stateTime += delta;
 		}
