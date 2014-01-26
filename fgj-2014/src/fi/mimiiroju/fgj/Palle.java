@@ -23,7 +23,7 @@ public class Palle extends Circle {
 
 	public void update(float delta) {
 		if (Gdx.input.justTouched()) {
-			jump();
+			jump(1.0f);
 		}
 		
 		stateTime += delta;
@@ -32,10 +32,10 @@ public class Palle extends Circle {
 		preventOffscreen();
 	}
 	
-	public synchronized void jump() {
+	public synchronized void jump(float intensityMultiplier) {
 		if (state == State.RUNNING) {
 			state = State.JUMPING;
-			velocity.y = 425;
+			velocity.y = 425 * (intensityMultiplier > 1f ? intensityMultiplier : 1f);
 		}
 	}
 	

@@ -6,11 +6,12 @@ import com.badlogic.gdx.graphics.GL10;
 
 public class MenuScreen implements Screen {
 
+	public static final String TOUCH_TO_START = "TOUCH TO START!";
+	
 	final FGJ2014 game;
 
 	public MenuScreen(FGJ2014 game) {
 		this.game = game;
-
 	}
 
 	@Override
@@ -19,7 +20,12 @@ public class MenuScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
-		Assets.menuFont.draw(game.batch, "TOUCH TO START!", World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
+		Assets.menuFont.draw(
+				game.batch, 
+				TOUCH_TO_START, 
+				0,
+				Gdx.graphics.getHeight() / 2
+				);
 		game.batch.end();
 
 		if (Gdx.input.justTouched()) {

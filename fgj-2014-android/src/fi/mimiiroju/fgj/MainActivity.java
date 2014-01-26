@@ -35,7 +35,15 @@ public class MainActivity extends AndroidApplication {
 		mDataHandler = new Handler(getMainLooper()) {
 			@Override
 			public void handleMessage(Message msg) {
-				Gdx.app.log(getClass().getSimpleName(), "Muscle activity: " + msg.arg1 + " \u00B5V");
+				if (msg.what == MyontecPants.JUMP) {
+					Gdx.app.log(getClass().getSimpleName(), "JUMP!");
+					GameScreen gameScreen = theGame.gameScreen;
+					if (gameScreen != null) {
+						gameScreen.world.palle.jump(msg.arg1 / 350.0f);
+					}
+				} else {
+					//Gdx.app.log(getClass().getSimpleName(), "Muscle activity: " + msg.arg1 + " \u00B5V");
+				}
 			}
 		};
 

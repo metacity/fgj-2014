@@ -23,6 +23,7 @@ public class MyontecPants {
 	public static final int RIGHT_QUADRICEPS = 2;
 	public static final int LEFT_HAMSTRINGS = 3;
 	public static final int RIGHT_HAMSTRINGS = 4;
+	public static final int JUMP = 5;
 	
 	private static final String TAG = "MyontecPants";
 
@@ -98,6 +99,9 @@ public class MyontecPants {
 
 
 	private class ReaderTask implements Runnable {
+		
+		private final int[] prevValues = new int[4];
+		private final byte[] samples = new byte[8]; // Each datagroup is 8 bytes
 
 		@Override
 		public void run() {
@@ -105,14 +109,13 @@ public class MyontecPants {
 				// Read and ignore header (303 bytes)
 				mInStream.readFully(new byte[303]);
 				
-				byte[] samples = new byte[8]; // Each datagroup is 8 bytes
 				while (true) {
 					mInStream.readFully(samples);
 					//Gdx.app.log(TAG, Arrays.toString(samples));
 					
 					// Ignore a "marker" packet
-					if (!isMarkerPacket(samples)) {
-						handleSamples(samples);
+					if (!isMarkerPacket()) {
+						handleSamples();
 					}
 				}
 			} catch (IOException ioex) {
@@ -120,22 +123,26 @@ public class MyontecPants {
 			}
 		}
 		
-		private boolean isMarkerPacket(byte[] samples) {
+		private boolean isMarkerPacket() {
 			return (samples[0] == 0x7F && samples[1] >= 0xF0 && samples[1] <= 0xFF);
 		}
 		
-		private void handleSamples(byte[] samples) {
-			int ch1Value = ((samples[1] & 0xAF) << 8) + (samples[0] & 0xFF);
+		private void handleSamples() {
+			int ch1Value = prevValues[0] = ((samples[1] & 0xAF) << 8) + (samples[0] & 0xFF);
 			mOutputHandler.obtainMessage(LEFT_QUADRICEPS, ch1Value, 0).sendToTarget();
 			
-			int ch2Value = ((samples[3] & 0xFF) << 8) + (samples[2] & 0xFF);
+			int ch2Value  = prevValues[1] = ((samples[3] & 0xFF) << 8) + (samples[2] & 0xFF);
 			mOutputHandler.obtainMessage(RIGHT_QUADRICEPS, ch2Value, 0).sendToTarget();
 			
-			int ch3Value = ((samples[5] & 0xFF) << 8) + (samples[4] & 0xFF);
+			int ch3Value = prevValues[2] = ((samples[5] & 0xFF) << 8) + (samples[4] & 0xFF);
 			mOutputHandler.obtainMessage(LEFT_HAMSTRINGS, ch3Value, 0).sendToTarget();
 			
-			int ch4Value = ((samples[7] & 0xFF) << 8) + (samples[6] & 0xFF);
+			int ch4Value = prevValues[3] = ((samples[7] & 0xFF) << 8) + (samples[6] & 0xFF);
 			mOutputHandler.obtainMessage(RIGHT_HAMSTRINGS, ch4Value, 0).sendToTarget();
+			
+			if (prevValues[0] > 85 && prevValues[1] > 85) {  // Etureidet vaan
+				mOutputHandler.obtainMessage(JUMP, prevValues[0] + prevValues[1], 0).sendToTarget();
+			}
 		}
 	}
 }

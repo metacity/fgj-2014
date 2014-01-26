@@ -59,7 +59,7 @@ public class WorldRenderer {
 		renderScore();
 		batch.end();
 		
-		renderHitBoxes();
+		//renderHitBoxes();
 	}
 	
 	private void renderBackground() {

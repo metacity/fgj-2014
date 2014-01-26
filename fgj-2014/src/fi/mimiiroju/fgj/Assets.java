@@ -41,7 +41,7 @@ public class Assets {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Roboto-Bold.ttf"));
 		font = generator.generateFont(Gdx.graphics.getHeight() / 25);
 		font.setColor(Color.WHITE);
-		menuFont = generator.generateFont(Gdx.graphics.getHeight() / 15);
+		menuFont = generator.generateFont(Gdx.graphics.getHeight() / 5);
 		menuFont.setColor(Color.WHITE);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
