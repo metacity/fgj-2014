@@ -3,6 +3,9 @@ package fi.mimiiroju.fgj;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -24,13 +27,12 @@ public class World {
 	int score = 0;
 	long lastRockSpawnTime;
 	long nextMushroomAfterNs = 2000000000L;
-
+	
 	public World() {
 		palle = new Palle();
 		activeMushrooms = new Array<Mushroom>(false, 8);
 		mushroomPool = Pools.get(Mushroom.class);
 		collided = false;
-		
 	}
 
 	public void update(float delta) {
@@ -43,8 +45,8 @@ public class World {
 			mushroom.update(delta);
 			
 			if (Intersector.overlaps(palle, mushroom)) {
-				//Gdx.app.log("Törmäys!", "Törmäsit kiveen");
-				Gdx.input.vibrate(10);
+				//Gdx.app.log("Tï¿½rmï¿½ys!", "Tï¿½rmï¿½sit kiveen");
+				Gdx.input.vibrate(200);
 				mushroom.state = Mushroom.State.EXPLODING;
 				collided = true;
 			}

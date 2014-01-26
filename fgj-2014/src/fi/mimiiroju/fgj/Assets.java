@@ -18,6 +18,7 @@ public class Assets {
 
 	static Texture background;
 	static Texture mushroom;
+	static BitmapFont menuFont;
 	static BitmapFont font;
 	static Music music;
 
@@ -40,6 +41,8 @@ public class Assets {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Roboto-Bold.ttf"));
 		font = generator.generateFont(Gdx.graphics.getHeight() / 25);
 		font.setColor(Color.WHITE);
+		menuFont = generator.generateFont(Gdx.graphics.getHeight() / 15);
+		menuFont.setColor(Color.WHITE);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
 	
@@ -81,6 +84,7 @@ public class Assets {
 		background.dispose();
 		mushroom.dispose();
 		music.dispose();
+		menuFont.dispose();
 		font.dispose();
 		palleTexture.dispose();
 		explosionTexture.dispose();
