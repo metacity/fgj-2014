@@ -15,6 +15,7 @@ public class WorldRenderer {
 	final SpriteBatch batch;
 	final World world;
 	final OrthographicCamera camera;
+	final long startTime;
 	
 	final Animation palleAnimation;
 	final Animation explosionAnimation;
@@ -29,13 +30,14 @@ public class WorldRenderer {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT);
 		
+		startTime = System.nanoTime();
+		
 		palleAnimation = new Animation(RUNNING_FRAME_DURATION, Assets.palleFrames);
 		explosionAnimation = new Animation(EXPLOSION_FRAME_DURATION, Assets.explosionFrames);
 		
 		
 		Assets.background.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		backgroundSprite = new Sprite(Assets.background, 0, 0, World.WORLD_WIDTH, World.WORLD_HEIGHT);
-		backgroundSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	public void render() {
@@ -44,6 +46,7 @@ public class WorldRenderer {
 		batch.begin();
 		renderBackground();
 		renderObjects();
+		renderScore();
 		batch.end();
 	}
 	
@@ -76,7 +79,7 @@ public class WorldRenderer {
 		}
 	}
 	
-	public void renderMushrooms() {
+	private void renderMushrooms() {
 		int len = world.activeMushrooms.size;
 		for (int i = 0; i < len; ++i) {
 			Mushroom mushroom = world.activeMushrooms.get(i);
@@ -86,5 +89,9 @@ public class WorldRenderer {
 				batch.draw(Assets.mushroom, mushroom.x, mushroom.y);
 			}
 		}
+	}
+	
+	private void renderScore() {
+		Assets.font.draw(batch, String.format("Time: %.2f sec", (System.nanoTime() - startTime) / 1e9), 15, 40);
 	}
 }

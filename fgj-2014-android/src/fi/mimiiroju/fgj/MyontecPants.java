@@ -61,9 +61,9 @@ public class MyontecPants {
 		sendCommand("omn\r", true);
 		
 		// ..and terminate connection
-		mOutStream.close();
-		mInStream.close();
-		mBtSocket.close();
+		if (mOutStream != null) mOutStream.close();
+		if (mInStream != null) mInStream.close();
+		if (mBtSocket != null) mBtSocket.close();
 	}
 
 	public void startMeasurement() throws IOException {

@@ -25,6 +25,8 @@ public class FGJ2014 extends Game {
 		gameOverScreen = new GameOverScreen(this);
 		
 		setScreen(menuScreen);
+		setScreen(gameScreen);
+		Assets.music.play();
 	}
 
 	@Override
