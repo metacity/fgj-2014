@@ -93,5 +93,6 @@ public class WorldRenderer {
 	
 	private void renderScore() {
 		Assets.font.draw(batch, String.format("Time: %.2f sec", (System.nanoTime() - startTime) / 1e9), 15, 40);
+		Assets.font.draw(batch, "Health: " + world.palle.health + "%", 15, world.WORLD_HEIGHT - 15);
 	}
 }

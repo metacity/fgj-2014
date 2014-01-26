@@ -48,7 +48,9 @@ public class World {
 				//Gdx.app.log("T�rm�ys!", "T�rm�sit kiveen");
 				Gdx.input.vibrate(200);
 				mushroom.state = Mushroom.State.EXPLODING;
-				collided = true;
+				palle.health -= 1;
+				if(palle.health == 0)
+					collided = true;
 			}
 			
 			if (mushroom.x + Mushroom.WIDTH < 0) {

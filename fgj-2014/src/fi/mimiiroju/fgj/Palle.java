@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Palle extends Circle {
 	static final float HITBOX_RADIUS = 100;
 	static final float minY = Gdx.graphics.getWidth() / 20;
+	public int health = 100;
 	
 	final Vector2 velocity;
 	float stateTime = 0.0f;
