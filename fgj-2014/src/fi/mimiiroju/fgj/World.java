@@ -24,6 +24,7 @@ public class World {
 	int score = 0;
 	long lastRockSpawnTime;
 	long nextMushroomAfterNs = 2000000000L;
+	long startTime = System.nanoTime();
 	
 	public World() {
 		palle = new Palle();
@@ -61,7 +62,16 @@ public class World {
 			Gdx.app.log("Spawnataan kivi", "*SPAWNED*");
 			lastRockSpawnTime = TimeUtils.nanoTime();
 			activeMushrooms.add(mushroomPool.obtain());
-			nextMushroomAfterNs = (long) (Math.random() * 4000000000L + 2000000000L);
+			
+			long minAfter = 2000000000L;
+			long spawnVariation = 4000000000L;
+			if (System.nanoTime() - startTime > 6000000000L) { // After 60s
+				minAfter = 1000000000L;
+			} else if (System.nanoTime() - startTime > 120000000000L) { // After 120s
+				minAfter = 1000000000L;
+				spawnVariation = 3000000000L;
+			}
+			nextMushroomAfterNs = (long) (Math.random() * spawnVariation + minAfter);
 		}
 	}
 }

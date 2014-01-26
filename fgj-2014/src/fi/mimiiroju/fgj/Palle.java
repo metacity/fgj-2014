@@ -35,7 +35,12 @@ public class Palle extends Circle {
 	public synchronized void jump(float intensityMultiplier) {
 		if (state == State.RUNNING) {
 			state = State.JUMPING;
-			velocity.y = 425 * (intensityMultiplier > 1f ? intensityMultiplier : 1f);
+			if (intensityMultiplier < 1f) {
+				intensityMultiplier = 1f;
+			} else if (intensityMultiplier > 2f) {
+				intensityMultiplier = 2f;
+			}
+			velocity.y = 425 * intensityMultiplier;
 		}
 	}
 	
