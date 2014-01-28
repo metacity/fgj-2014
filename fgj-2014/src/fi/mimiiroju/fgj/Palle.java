@@ -1,20 +1,29 @@
 package fi.mimiiroju.fgj;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
+
+import fi.mimiiroju.fgj.Mushroom.State;
 
 @SuppressWarnings("serial")
 public class Palle extends Circle {
 
 	static final float HITBOX_RADIUS = 105;
 	static final float minY = 50;
+	static final int MOVEMENT_PER_SECOND_PALLE = 300;
 	
 	public int health = 100;
 	
 	final Vector2 velocity;
 	float stateTime = 0.0f;
 	State state = State.RUNNING;
+	boolean flinged;
+	Game game;
+	
 
 	public Palle() {
 		super(World.WORLD_WIDTH/4, minY + HITBOX_RADIUS, HITBOX_RADIUS);
@@ -22,8 +31,16 @@ public class Palle extends Circle {
 	}
 
 	public void update(float delta) {
-		if (Gdx.input.justTouched()) {
+		if(Gdx.input.getAccelerometerX() < 0) {
 			jump(1.0f);
+			}
+		
+		if(state == state.RUNNING && Gdx.input.isTouched() && y < 160) {
+			if(Gdx.input.getX() > 0 && Gdx.input.getX() < 400) {
+				 x -= 15; //-> vasen puoli näytöstä liikuttaa pallee vasemmalle päin
+			} else if (Gdx.input.getX() > 800 && Gdx.input.getX() < 1200) {
+				 x += 15; //-> oikea puoli näytöstä liikuttaa pallea oikealle päin
+			}
 		}
 		
 		stateTime += delta;
@@ -56,5 +73,7 @@ public class Palle extends Circle {
 		RUNNING,
 		JUMPING
 	}
+
+
 
 }

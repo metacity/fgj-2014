@@ -15,7 +15,12 @@ public class Assets {
 	private final static int PALLE_FRAME_ROWS = 2;
 	private final static int EXPLOSION_FRAME_COLS = 5;
 	private final static int EXPLOSION_FRAME_ROWS = 5;
+	//private final static int COIN_CAUGHT_FRAME_COLS = X;	Puuttuu animaatio, TBA
+	//private final static int COIN_CAUGHT_FRAME_ROWS = X;	Puuttuu animaatio, TBA
+	//private final static int COIN_TURN_FRAME_COLS = X;	Puuttuu animaatio, TBA
+	//private final static int COIN_TURN_FRAME_ROWS = X;	Puuttuu animaatio, TBA
 
+	// static Texture coin;		Puuttuu textuuri
 	static Texture background;
 	static Texture mushroom;
 	static BitmapFont menuFont;

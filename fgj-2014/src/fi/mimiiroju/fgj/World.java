@@ -44,11 +44,18 @@ public class World {
 			
 			if (Intersector.overlaps(palle, mushroom)) {
 				//Gdx.app.log("T�rm�ys!", "T�rm�sit kiveen");
-				Gdx.input.vibrate(200);
-				mushroom.state = Mushroom.State.EXPLODING;
-				palle.health -= 1;
-				if(palle.health == 0)
+				
+				if(mushroom.state == mushroom.state.NORMAL) {
+					Gdx.input.vibrate(200);
+					palle.health -= 30;
+					mushroom.state = Mushroom.State.EXPLODING;
+					}
+				
+				if(palle.health <= 0)
 					collided = true;
+			}
+			if(palle.x < 10) {
+				palle.x = 10;
 			}
 			
 			if (mushroom.x + Mushroom.WIDTH < 0) {
@@ -66,9 +73,9 @@ public class World {
 			long minAfter = 2000000000L;
 			long spawnVariation = 4000000000L;
 			if (System.nanoTime() - startTime > 6000000000L) { // After 60s
-				minAfter = 1000000000L;
+				spawnVariation = 3500000000L;
 			} else if (System.nanoTime() - startTime > 120000000000L) { // After 120s
-				minAfter = 1000000000L;
+				minAfter = 1750000000L;
 				spawnVariation = 3000000000L;
 			}
 			nextMushroomAfterNs = (long) (Math.random() * spawnVariation + minAfter);

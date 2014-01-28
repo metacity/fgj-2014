@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 @SuppressWarnings("serial")
 public class Mushroom extends Rectangle implements Poolable {
 
-	static final float MOVEMENT_PER_SECOND = 380;
+	static final float MOVEMENT_PER_SECOND_MUHSROOM = 380;
 	static final float WIDTH = 70;
 	static final float HEIGHT = 100;
 	
@@ -19,7 +19,7 @@ public class Mushroom extends Rectangle implements Poolable {
 	}
 
 	public void update(float delta) {
-		x -= (MOVEMENT_PER_SECOND * delta);
+		x -= (MOVEMENT_PER_SECOND_MUHSROOM * delta);
 		if (state == State.EXPLODING) {
 			stateTime += delta;
 		}
