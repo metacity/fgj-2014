@@ -10,6 +10,8 @@ public class FGJ2014 extends Game {
 	SpriteBatch batch;
 	MenuScreen menuScreen;
 	GameScreen gameScreen;
+	LevelFinishedScreen levelFinishedScreen;
+	World world;
 	
 	@Override
 	public void create() {
@@ -20,8 +22,11 @@ public class FGJ2014 extends Game {
 		batch = new SpriteBatch();
 		
 		menuScreen = new MenuScreen(this);
+		gameScreen = new GameScreen(this);
+		levelFinishedScreen = new LevelFinishedScreen(this);
 		
 		setScreen(menuScreen);
+		
 		Assets.music.play();
 	}
 
@@ -38,6 +43,9 @@ public class FGJ2014 extends Game {
 		menuScreen.dispose();
 		if (gameScreen != null) {
 			gameScreen.dispose();
+		}
+		if (levelFinishedScreen != null) {
+			levelFinishedScreen.dispose();
 		}
 	}
 	

@@ -20,12 +20,13 @@ public class Assets {
 	//private final static int COIN_TURN_FRAME_COLS = X;	Puuttuu animaatio, TBA
 	//private final static int COIN_TURN_FRAME_ROWS = X;	Puuttuu animaatio, TBA
 
-	// static Texture coin;		Puuttuu textuuri
+	static Texture coin;		
 	static Texture background;
 	static Texture mushroom;
 	static BitmapFont menuFont;
 	static BitmapFont font;
 	static Music music;
+	static Texture exitSign;
 
 	static Texture palleTexture;
 	static TextureRegion[] palleFrames;
@@ -36,9 +37,11 @@ public class Assets {
 	public static void load() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
 		music.setLooping(true);
-
+		
+		coin = new Texture(Gdx.files.internal("data/coin.png"));
 		mushroom = new Texture(Gdx.files.internal("data/mushroom.png"));
 		background = new Texture(Gdx.files.internal("data/background2.png"));
+		exitSign = new Texture(Gdx.files.internal("data/exitSign_remake.png"));
 		
 		loadRunningAnimation();
 		loadExplosionAnimation();
@@ -46,7 +49,7 @@ public class Assets {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Roboto-Bold.ttf"));
 		font = generator.generateFont(Gdx.graphics.getHeight() / 25);
 		font.setColor(Color.WHITE);
-		menuFont = generator.generateFont(Gdx.graphics.getHeight() / 5);
+		menuFont = generator.generateFont(Gdx.graphics.getHeight() / 10);
 		menuFont.setColor(Color.WHITE);
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 	}
@@ -86,12 +89,15 @@ public class Assets {
 	}
 
 	public static void dispose() {
+		coin.dispose();
 		background.dispose();
 		mushroom.dispose();
+		exitSign.dispose();
 		music.dispose();
 		menuFont.dispose();
 		font.dispose();
 		palleTexture.dispose();
 		explosionTexture.dispose();
 	}
+	
 }

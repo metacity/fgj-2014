@@ -16,12 +16,13 @@ public class Palle extends Circle {
 	static final float minY = 50;
 	static final int MOVEMENT_PER_SECOND_PALLE = 300;
 	
-	public int health = 100;
+	public int health = 90;
+	
+	public int coinAmount = 0;
 	
 	final Vector2 velocity;
 	float stateTime = 0.0f;
 	State state = State.RUNNING;
-	boolean flinged;
 	Game game;
 	
 

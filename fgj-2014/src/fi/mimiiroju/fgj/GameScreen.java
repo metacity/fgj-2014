@@ -30,6 +30,16 @@ public class GameScreen implements Screen {
 			game.setScreen(game.menuScreen);
 			dispose();
 		}
+		if(world.finished) {
+			Gdx.app.log("finished ?", "TO TEH FINAL SCREENEH");
+			game.setScreen(game.levelFinishedScreen);
+			dispose();
+			world.finished = false;
+			world.ended = false;
+			Gdx.app.log("ended ? ", String.valueOf(world.ended));
+			Gdx.app.log("finished ? ", String.valueOf(world.finished));
+		}
+		
 	}
 
 	private void draw() {

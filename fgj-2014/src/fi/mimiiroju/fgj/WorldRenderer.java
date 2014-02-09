@@ -16,18 +16,22 @@ public class WorldRenderer {
 	static final float EXPLOSION_FRAME_DURATION = 0.06f;
 	// static final float COIN_TURNING_FRAME_DURATION = 0.0Xf;	Riippuu animaatiosta, TBA
 	// static final float COIN_CAUGHT_FRAME_DURATION = 0.0Xf;  	Riippuu animaatiosta, TBA
+	public int coinAmount;
 	
 	final SpriteBatch batch;
 	final World world;
 	final OrthographicCamera camera;
+	
 	
 	final Animation palleAnimation;
 	final Animation explosionAnimation;
 	// final Animation coinAnimation;			Animaatio puuttuu
 	// final Animation coinCaughtAnimation;		Animaatio puuttuu
 	
+	
 	Sprite backgroundSprite;
 	float scrollTimer = 0.0f;
+	//int coinSpawnHeight = (int) (Math.random() * 300);
 	
 	
 	// For hitbox bound rendering..
@@ -59,28 +63,40 @@ public class WorldRenderer {
 		renderBackground();
 		renderObjects();
 		renderScore();
+		if(world.ended == true){
+			renderExitSign();
+		}
 		batch.end();
-		
-		//renderHitBoxes();
+		renderHitBoxes();
 	}
 	
 	private void renderBackground() {
-		batch.disableBlending();
 		
-		scrollTimer += Gdx.graphics.getDeltaTime() * 0.3f;
-		if (scrollTimer > 1.0f) {
-			scrollTimer = 0.0f;
+		batch.disableBlending();
+		if(world.ended == false) {
+			scrollTimer += Gdx.graphics.getDeltaTime() * 0.3f;
+			if (scrollTimer > 1.0f) {
+				scrollTimer = 0.0f;
+			}
+			backgroundSprite.setU(scrollTimer);
+			backgroundSprite.setU2(scrollTimer + 1);
+			backgroundSprite.draw(batch);
+		} else if(world.ended == true) {
+			Mushroom.MOVEMENT_PER_SECOND_MUHSROOM = 0;
+			backgroundSprite.draw(batch);
+			
 		}
-		backgroundSprite.setU(scrollTimer);
-		backgroundSprite.setU2(scrollTimer + 1);
-		backgroundSprite.draw(batch);
+		
 	}
 	
 	private void renderObjects() {
 		batch.enableBlending();
 		renderPalle();
 		renderMushrooms();
-		//renderCoins();
+		renderCoins();
+		if(world.ended) {
+			renderExitSign();
+		}
 	}
 	
 	private void renderPalle() {
@@ -107,17 +123,23 @@ public class WorldRenderer {
 		}
 	}
 	
-	/*
-	 private void renderCoins() {
-	 	TEHDÄÄN KUNHAN ANIMAATIOT JA SPAWNAUS PERIAATE SELVIÄÄ
-	 }
-	  
-	 */
+	private void renderCoins() {
+		int len = world.activeCoins.size;
+		for(int i = 0; i < len; i++) {
+			Coin coin = world.activeCoins.get(i);
+			batch.draw(Assets.coin, coin.x, coin.y);
+		}
+	}
+	
 	
 	private void renderScore() {
 		Assets.font.draw(batch, String.format("Time: %.2f sec", (System.nanoTime() - world.startTime) / 1e9), 15, 40);
-		Assets.font.draw(batch, "Health: " + world.palle.health + "%", 15, world.WORLD_HEIGHT - 15);
-		//Assets.fon.draw(batch, String.format("Coins: " + world.coin.amount, vasenyläkulma xy));
+		Assets.font.draw(batch, "Health: " + world.palle.health, 15, World.WORLD_HEIGHT - 15);
+		Assets.font.draw(batch, "Coins: " + world.palle.coinAmount, 15, World.WORLD_HEIGHT - 45);		
+	}
+	
+	public void renderExitSign() {
+		batch.draw(Assets.exitSign, world.WORLD_WIDTH-200, 50);
 	}
 	
 	private void renderHitBoxes() {
@@ -126,6 +148,10 @@ public class WorldRenderer {
 		for (Mushroom shroom : world.activeMushrooms) {
 			shapeRenderer.rect(shroom.x, shroom.y, shroom.width, shroom.height);
 		}
+		for(Coin coinz : world.activeCoins) {
+			shapeRenderer.rect(coinz.x, coinz.y, coinz.width, coinz.height);
+		}
 		shapeRenderer.end();
 	}
+	
 }
