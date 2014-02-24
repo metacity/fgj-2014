@@ -51,7 +51,7 @@ public class MainActivity extends AndroidApplication {
 		if (btAdapter != null && btAdapter.isEnabled()) {
 			Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 			for (BluetoothDevice device : pairedDevices) {
-				if (device.getName().startsWith("MbM-100")) {
+				if (device.getName().startsWith("MbM-")) {
 					initMyontecPants(device);
 					break;
 				}
